@@ -5,17 +5,16 @@ header-img: img/home-bg.jpg
 email: liaoishere@gmail.com
 description: "On A Clear Disk You Can Seek Forever"
 keyword: ""
-url: "http://paco0x.org"              # your host, for absolute URL
-baseurl: ""         # for example, '/blog' if your blog hosted on 'host/blog'
+url: "http://paco0x.org" # your host, for absolute URL
+baseurl: "" # for example, '/blog' if your blog hosted on 'host/blog'
 author: "Paco"
 timezone: "Asia/Shanghai"
 future: true
 
 # SNS settings
 RSS: true
-weibo_username:     aoLiii
-github_username:    paco0x
-twitter_username:  paco0x
+github_username: paco0x
+twitter_username: paco0x
 
 # Build settings
 highlighter: rouge
@@ -23,7 +22,7 @@ permalink: pretty
 archive_path: archives
 paginate: 10
 exclude: ["less", "node_modules", "Gruntfile.js", "package.json", "README.md"]
-anchorjs: true                          # if you want to customize anchor. check out line:181 of `post.html`
+anchorjs: true # if you want to customize anchor. check out line:181 of `post.html`
 
 # Plugins
 # from PR#40, to support local preview for Jekyll 3.0
@@ -37,21 +36,20 @@ plugins:
 # document: http://jekyllrb.com/docs/configuration/#kramdown
 markdown: kramdown
 kramdown:
-  input: GFM                            # use Github Flavored Markdown !important
+  input: GFM # use Github Flavored Markdown !important
   syntax_highlighter: rouge
 
-
 # Disqus settings
-disqus_username: liaoph                  # set to false if you want to use Comment without Sharing
+disqus_username: liaoph # set to false if you want to use Comment without Sharing
 
 # Analytics settings
-ga_track_id: 'G-97JGLVEY5F'
+ga_track_id: "G-97JGLVEY5F"
 
 # Sidebar settings
-sidebar: true                           # whether or not using Sidebar.
+sidebar: true # whether or not using Sidebar.
 sidebar-about-description: "Proudly uncool and out of fashion"
-sidebar-avatar: /img/avatar.jpg      # use absolute URL, seeing it's used in both `/` and `/about/`
+sidebar-avatar: /img/avatar.jpg # use absolute URL, seeing it's used in both `/` and `/about/`
 
 # Featured Tags
-featured-tags: true                     # whether or not using Feature-Tags
-featured-condition-size: 1              # A tag will be featured if the size of it is more than this condition value
+featured-tags: true # whether or not using Feature-Tags
+featured-condition-size: 1 # A tag will be featured if the size of it is more than this condition value
