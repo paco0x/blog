@@ -1,4 +1,5 @@
 baseURL = "http://paco0x.org/"
+title = "Paco"
 defaultContentLanguage = "zh-cn"
 languageCode = "zh-CN"
 hasCJKLanguage = true
