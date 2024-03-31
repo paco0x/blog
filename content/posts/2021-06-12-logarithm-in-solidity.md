@@ -20,17 +20,21 @@ categories:
 
 我们需要先熟悉以下对数公式的变化形式：
 
+{{< math >}}
 $$
 log_b(x \cdot y) = log_bx + log_by \\
 log_b{x^y} =  y \cdot log_bx
 $$
+{{< /math >}}
 
 以及对数的换底公式：
 
+{{< math >}}
 $$
 log_bx = \frac{log_nx}{log_nb} \\
 log_bx = log_nx \times log_bn
 $$
+{{< /math >}}
 
 ## 将计算转换为以 2 为底的计算
 
@@ -105,48 +109,58 @@ $$
 
 并且：
 
+{{< math >}}
 $$
 \begin{cases}
 0 \le log_2{\frac{x}{2^n}} < 1 \\
 1 \le \frac{x}{2^n} < 2
 \end{cases}
 $$
+{{< /math >}}
 
 那么 $log_2{\frac{x}{2^n}}$ 就是对数结果的小数部分的值。先通过 $x := \frac{x}{2^n}$ 重新赋值将前面的公式简化为 $log_2x$，之后可以可以通过如下公式来对其进行转换：
 
+{{< math >}}
 $$
 log_2x = \frac{log_2{x^2}}{2} \ \ \ \ \ \ \ \ (式1) \\
 log_2x = 1 + log_2\frac{x}{2} \ \ \ \ (式2)
 $$
+{{< /math >}}
 
 注意，在使用式二进行转换时，式中加法的右边部分，需要保证 $\frac{x}{2} \ge 1$，否则 $log_2\frac{x}{2}$ 的值将会为负数，导致计算难度增大。
 
 因为前面限定了条件 $1 \le x < 2$，那么我们可以把 $log_2x$ 的计算转化成以下形式：
 
+{{< math >}}
 $$
 \begin{cases}
 log_2x = n_0 \times 1 + n_1 \times \frac{1}{2} + n_2 \times \frac{1}{4} + n_3 \times \frac{1}{8} + ... \\
 n_i \in \{0, 1\}
 \end{cases}
 $$
+{{< /math >}}
 
 因为 $log_2x < 1$，这里可以省略掉 $n_0 \times 1$，即：
 
+{{< math >}}
 $$
 \begin{cases}
 log_2x = n_1 \times \frac{1}{2} + n_2 \times \frac{1}{4} + n_3 \times \frac{1}{8} + ... \\
 n_i \in \{0, 1\}
 \end{cases}
 $$
+{{< /math >}}
 
 即
 
+{{< math >}}
 $$
 \begin{cases}
 log_2x = \sum_{i=1}^{\infty}{\frac{n_i}{2^i}} \\
 n_i \in \{0, 1\}
 \end{cases}
 $$
+{{< /math >}}
 
 这样我们就把对数的计算转换成为了加法计算，加法计算迭代的次数越多，计算结果的精度就越高。
 
