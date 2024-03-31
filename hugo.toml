@@ -23,7 +23,7 @@ version = "0.4.X"
 defaultTheme = "auto"
 
 [params.header.title]
-name = "Paco's Blog"
+name = "Paco"
 
 [params.search]
 enable = true
