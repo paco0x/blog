@@ -72,7 +72,7 @@ Invariant Test 是指对系统中的某些不变性（Invariant）进行的测�
 
 我们以 Foundry 默认项目中的代码为例，运行 `forge init counter`，Foundry 会生成一个项目，并包含如下合约：
 
-```solidity
+```Solidity
 pragma solidity ^0.8.13;
 
 contract Counter {
@@ -90,7 +90,7 @@ contract Counter {
 
 其中的测试代码为：
 
-```solidity
+```Solidity
 pragma solidity ^0.8.13;
 
 import "forge-std/Test.sol";
@@ -168,7 +168,7 @@ Fuzz Test 的这些策略都可以通过配置来调整，具体可以参考 [Co
 
 我们对下面这个合约来进行 Invariant Test：
 
-```solidity
+```Solidity
 pragma solidity ^0.8.13;
 
 contract ExampleContract1 {
@@ -195,7 +195,7 @@ contract ExampleContract1 {
 
 测试合约如下：
 
-```solidity
+```Solidity
 pragma solidity ^0.8.13;
 
 import "forge-std/Test.sol";
@@ -266,7 +266,7 @@ Handler 合约可以认为是介于系统合约和 Foundry 之间的中间层，
 
 下面示例对一个 ERC-4626 合约来进行测试（摘自 Foundry book）：
 
-```solidity
+```Solidity
 // SPDX-License-Identifier: UNLICENSED
 pragma solidity ^0.8.17;
 
@@ -361,7 +361,7 @@ contract Basic4626Deposit {
 
 现在假设我们想对 `deposit()` 函数进行测试，我们可以把 `deposit` 相关的操作包装到 Handler 合约中：
 
-```solidity
+```Solidity
 function deposit(uint256 assets) public virtual {
     asset.mint(address(this), assets);
 
@@ -381,7 +381,7 @@ function deposit(uint256 assets) public virtual {
 
 例如，在上面的 `deposit()` 函数中，我们对总 deposit 数量进行追踪：
 
-```solidity
+```Solidity
 function deposit(uint256 assets) public virtual {
     asset.mint(address(this), assets);
 
@@ -399,7 +399,7 @@ function deposit(uint256 assets) public virtual {
 
 可以在 Handler 的函数中加入一些 assert 来进行测试，例如给 `deposit()` 加上 `assertEq()` 测试：
 
-```solidity
+```Solidity
 function deposit(uint256 assets) public virtual {
     asset.mint(address(this), assets);
 
@@ -421,7 +421,7 @@ function deposit(uint256 assets) public virtual {
 
 上面的测试中，函数的 sender 都是 `address(this)`，我们可以使用 actor 模式来给测试生产随机的调用者，可以对待测试函数使用如下 `modifier`：
 
-```solidity
+```Solidity
 address[] public actors;
 
 address internal currentActor;
@@ -443,7 +443,7 @@ Foundry 目前不支持显示在 Invariant Test 中每个函数调用的次数�
 
 例如在 `Handler` 中统计调用情况：
 
-```solidity
+```Solidity
 contract Handler {
     mapping(bytes32 => uint256) public numCalls;
 
@@ -465,7 +465,7 @@ contract Handler {
 
 在测试中加入一个专门的 Invariant Test case 来输入 call summary：
 
-```solidity
+```Solidity
     function invariant_callSummary() public view {
         handler.callSummary();
     }

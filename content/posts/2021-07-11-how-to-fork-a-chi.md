@@ -43,7 +43,7 @@ CHI 的工作原理也是允许用户 `mint` 和 `free` CHI token. 在 `mint` �
 
 使用合约的 `mint(uint256 value)` 可以用来 `mint` CHI token.
 
-```solidity
+```Solidity
 function mint(uint256 value) public {
     uint256 offset = totalMinted;
     assembly {
@@ -79,7 +79,7 @@ function mint(uint256 value) public {
 
 那么创建的 `initcode` 又是什么呢？其实就包含在这一段代码中：
 
-```solidity
+```Solidity
 mstore(0, 0x746d4946c0e9F43F4Dee607b0eF1fA1c3318585733ff6000526015600bf30000)
 ```
 
@@ -94,7 +94,7 @@ mstore(0, 0x746d4946c0e9F43F4Dee607b0eF1fA1c3318585733ff6000526015600bf30000)
 
 那么这段 `initcode` 又做了什么呢？我们将它解码成 evm 指令来看一下（这里用的 [Online Solidity Decompiler](https://ethervm.io/decompile) 这个工具）：
 
-```solidity
+```Solidity
 0000    74  PUSH21 0x6d4946c0e9f43f4dee607b0ef1fa1c3318585733ff
 0016    60  PUSH1 0x00
 0018    52  MSTORE
@@ -109,7 +109,7 @@ mstore(0, 0x746d4946c0e9F43F4Dee607b0eF1fA1c3318585733ff6000526015600bf30000)
 
 首先，执行 `PUSH21` 和 `PUSH1`，此时栈空间内容为：
 
-```solidity
+```Solidity
 [STACK]
 0: 0x0000000000000000000000000000000000000000000000000000000000000000
 1: 0x00000000000000000000006d4946c0e9f43f4dee607b0ef1fa1c3318585733ff
@@ -117,7 +117,7 @@ mstore(0, 0x746d4946c0e9F43F4Dee607b0eF1fA1c3318585733ff6000526015600bf30000)
 
 然后执行 `MSTORE`，它会将栈 1 中的字节流存储到栈 0 中指定的内存地址中，执行完成后栈空间就被清空了，而内存空间为：
 
-```solidity
+```Solidity
 [MEMORY]
 0x0: 0x00000000000000000000006d4946c0e9f43f4dee607b0ef1fa1c3318585733ff
 ```
@@ -128,7 +128,7 @@ mstore(0, 0x746d4946c0e9F43F4Dee607b0eF1fA1c3318585733ff6000526015600bf30000)
 
 那么这段 `bytecode` 又包含了什么指令呢？我们继续解码这段 `bytecode`（仍然使用 [Online Solidity Decompiler](https://ethervm.io/decompile)）：
 
-```solidity
+```Solidity
 0000    6D  PUSH14 0x4946c0e9f43f4dee607b0ef1fa1c
 000F    33  CALLER
 0010    18  XOR
@@ -155,7 +155,7 @@ mstore(0, 0x746d4946c0e9F43F4Dee607b0eF1fA1c3318585733ff6000526015600bf30000)
 
 在使用 gas token 时，CHI 提供了多个不同的 `burn` 方式，这里我们看最简单的一种：
 
-```solidity
+```Solidity
 function computeAddress2(uint256 salt) public view returns (address) {
     bytes32 _data = keccak256(
         abi.encodePacked(bytes1(0xff), address(this), salt, bytes32(0x3c1644c68e5d6cb380c36d1bf847fdbc0c7ac28030025a2fc5e63cce23c16348))
@@ -189,7 +189,7 @@ function free(uint256 value) public returns (uint256)  {
 
 计算出子合约的地址后，会直接进行 `.call("")` 调用来销毁它：
 
-```solidity
+```Solidity
 computeAddress2(_totalBurned + i).call("");
 ```
 
@@ -307,13 +307,13 @@ msotre(32, 0x1b6005f300000000000000000000000000000000000000000000000000000000)
 
 因为 `bytecode` 长度变长了，我们还需要修改 `create2` 创建合约时指定的长度，原始合约中 `create2` 调用为：
 
-```solidity
+```Solidity
 create2(0, 0, 30, add(offset, 0))
 ```
 
 我们需要修改为：
 
-```solidity
+```Solidity
 create2(0, 0, 36, add(offset, 0))
 ```
 
@@ -328,7 +328,7 @@ create2(0, 0, 36, add(offset, 0))
 
 将结果替换掉原来的 `initcode` hash：
 
-```solidity
+```Solidity
 function computeAddress2(uint256 salt) public view returns (address) {
     bytes32 _data = keccak256(
         abi.encodePacked(bytes1(0xff), address(this), salt, bytes32(0x7d69959a9f587c867b817f2a61b1385bc8a30e11e7f336616df1b23e35be5009))

@@ -36,7 +36,7 @@ Optimism 中为跨链交易设计了两种叫做 Deposits 和 Withdrawals 的交
 
 > 引用的代码片段均来自于 Optimism Bedrock 在 Sherlock contest 的代码，版本为 [3f4b3c3281](https://github.com/ethereum-optimism/optimism/tree/3f4b3c328153a8aa03611158b6984d624b17c1d9)
 
-```solidity
+```Solidity
 function finalizeWithdrawalTransaction(Types.WithdrawalTransaction memory _tx) external {
     ...
 
@@ -76,7 +76,7 @@ function finalizeWithdrawalTransaction(Types.WithdrawalTransaction memory _tx) e
 
 再来看看 `SafeCall.call` 的实现：
 
-```solidity
+```Solidity
 library SafeCall {
     function call(
         address _target,
@@ -109,7 +109,7 @@ library SafeCall {
 
 要修复这个 bug，可以通过这样的方式来完善这个检查：
 
-```solidity
+```Solidity
 require(gasleft() >= _tx.gasLimit + FINALIZE_GAS_BUFFER + 5_122); // Add more on gas buffer
 ```
 
@@ -212,7 +212,7 @@ func callGas(isEip150 bool, availableGas, base uint64, callCost *uint256.Int) (u
 
 我们来回顾一下 Optimism 的 withdrawal 交易的执行过程：
 
-```solidity
+```Solidity
 function finalizeWithdrawalTransaction(Types.WithdrawalTransaction memory _tx) external {
     ...
     require(
@@ -251,7 +251,7 @@ function finalizeWithdrawalTransaction(Types.WithdrawalTransaction memory _tx) e
 
 简化后的 `Portal` 合约和用户需要调用的合约：
 
-```solidity
+```Solidity
 // SPDX-License-Identifier: UNLICENSED
 pragma solidity ^0.8.13;
 
@@ -341,7 +341,7 @@ contract Portal {
 
 测试用例：
 
-```solidity
+```Solidity
 // SPDX-License-Identifier: UNLICENSED
 pragma solidity ^0.8.13;
 

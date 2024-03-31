@@ -226,7 +226,7 @@ ABDK Library 中实现了 Signed `64.64` fixed point number，使用 63 位整�
 
 log2 的代码实现为：
 
-```solidity
+```Solidity
 function log_2 (int128 x) internal pure returns (int128) {
     unchecked {  // 代码使用了 solidity 0.8，关闭溢出保护
         require (x > 0);
@@ -260,7 +260,7 @@ function log_2 (int128 x) internal pure returns (int128) {
 
 我们分解来看：
 
-```solidity
+```Solidity
 int256 msb = 0;
 int256 xc = x;
 if (xc >= 0x10000000000000000) { xc >>= 64; msb += 64; }
@@ -321,7 +321,7 @@ $$
 
 ABDK 中的实现如下：
 
-```solidity
+```Solidity
 function ln (int128 x) internal pure returns (int128) {
     unchecked {
         require (x > 0);
@@ -360,7 +360,7 @@ Uniswap v3 的代码实现在：[TickMath.sol](https://github.com/Uniswap/uniswa
 
 函数 `getTickAtSqrtRatio(uint160 sqrtPriceX96)` 求出给定 $\sqrt{P}$ 对应的 tick index i 的值。代码如下：
 
-```solidity
+```Solidity
 function getTickAtSqrtRatio(uint160 sqrtPriceX96) internal pure returns (int24 tick) {
     // second inequality must be < because the price can never reach the price at the max tick
     require(sqrtPriceX96 >= MIN_SQRT_RATIO && sqrtPriceX96 < MAX_SQRT_RATIO, 'R');
@@ -545,7 +545,7 @@ function getTickAtSqrtRatio(uint160 sqrtPriceX96) internal pure returns (int24 t
 
 注意，上面计算出的 msb 也是一个 `Q128.128` 定点数，接下来的代码：
 
-```solidity
+```Solidity
     if (msb >= 128) r = ratio >> (msb - 127);
     else r = ratio << (127 - msb);
 ```
@@ -569,7 +569,7 @@ function getTickAtSqrtRatio(uint160 sqrtPriceX96) internal pure returns (int24 t
 
 迭代计算小数部分：
 
-```solidity
+```Solidity
     assembly {
         r := shr(127, mul(r, r))        // 先计算 r := r^2，然后右移 127 位使其成为 Q129.127 定点数
         let f := shr(128, r)            // 右移 128 位，那么现在的第 0 位即为上一步操作结果中，整数位第 1 位的值，和 ABDK 同理，当其 f 为 1 时 r >= 2
@@ -596,14 +596,14 @@ function getTickAtSqrtRatio(uint160 sqrtPriceX96) internal pure returns (int24 t
 
 这样我们就计算出了 $log_2r$ 的**近似值**，接下来就可以计算出 $log_{\sqrt{1.0001}}r$ 的**近似值**：
 
-```solidity
+```Solidity
     int256 log_sqrt10001 = log_2 * 255738958999603826347141; // 128.128 number
 ```
 
 这里的 magic number `255738958999603826347141` 即为 $(log_{\sqrt{1.0001}}2)$<<64 的值，因为 log_2 是 `Q64` 的定点数，继续左移 64 位之后，得到一个 `Q128.128` 的定点数。
 
 
-```solidity
+```Solidity
     int24 tickLow = int24((log_sqrt10001 - 3402992956809132418596140100660247210) >> 128);
     int24 tickHi = int24((log_sqrt10001 + 291339464771989622907027621153398088495) >> 128);
 
