@@ -83,14 +83,14 @@ languageName = "English"
 identifier = "posts"
 name = "Posts"
 url = "/posts/"
-title = ""
+title = "Posts"
 weight = 1
 [[languages.en.menu.main]]
 identifier = "categories"
 name = "Categories"
 url = "/categories/"
-title = ""
-weight = 3
+title = "Categories"
+weight = 2
 
 [languages.zh-cn]
 weight = 2
@@ -101,14 +101,14 @@ hasCJKLanguage = true
 identifier = "posts"
 name = "文章"
 url = "/posts/"
-title = ""
+title = "文章"
 weight = 1
 [[languages.zh-cn.menu.main]]
 identifier = "categories"
 name = "分类"
 url = "/categories/"
-title = ""
-weight = 3
+title = "分类"
+weight = 2
 
 [markup.highlight]
 noClasses = false
